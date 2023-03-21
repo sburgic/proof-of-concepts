@@ -1,0 +1,15 @@
+_comm_process_msg: CODE, 239 0 118
+_comm_get_buff_hdl: CODE, 470 0 5
+_pic_init: CODE, 432 0 21
+_comm_get_sv_state: CODE, 808 0 2
+_ISR: CODE, 4 0 48
+_comm_output_state_to_string: CODE, 607 0 90
+_comm_get_output_state: CODE, 551 0 56
+_main: CODE, 75 0 135
+_comm_set_output_state: CODE, 357 0 75
+_util_strcmp: CODE, 475 0 69
+_uart_init: CODE, 453 0 17
+_uart_puts: CODE, 210 0 29
+_uart_putch: CODE, 544 0 7
+_util_memcpy: CODE, 697 0 40
+Total: 712

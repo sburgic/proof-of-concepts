@@ -1,0 +1,215 @@
+
+# 1 "D:\!electronics\!projects\usb_ctrl_6\utils.c"
+
+# 13 "C:\Program Files (x86)\HI-TECH Software\PICC\9.83\include\stdint.h"
+typedef signed char int8_t;
+
+# 20
+typedef signed int int16_t;
+
+# 27
+typedef signed short long int int24_t;
+
+# 34
+typedef signed long int int32_t;
+
+# 41
+typedef unsigned char uint8_t;
+
+# 47
+typedef unsigned int uint16_t;
+
+# 53
+typedef unsigned short long int uint24_t;
+
+# 59
+typedef unsigned long int uint32_t;
+
+# 67
+typedef signed char int_least8_t;
+
+# 74
+typedef signed int int_least16_t;
+
+# 81
+typedef signed short long int int_least24_t;
+
+# 88
+typedef signed long int int_least32_t;
+
+# 95
+typedef unsigned char uint_least8_t;
+
+# 101
+typedef unsigned int uint_least16_t;
+
+# 107
+typedef unsigned short long int uint_least24_t;
+
+# 113
+typedef unsigned long int uint_least32_t;
+
+# 122
+typedef signed char int_fast8_t;
+
+# 129
+typedef signed int int_fast16_t;
+
+# 136
+typedef signed short long int int_fast24_t;
+
+# 143
+typedef signed long int int_fast32_t;
+
+# 150
+typedef unsigned char uint_fast8_t;
+
+# 156
+typedef unsigned int uint_fast16_t;
+
+# 162
+typedef unsigned short long int uint_fast24_t;
+
+# 168
+typedef unsigned long int uint_fast32_t;
+
+# 174
+typedef int32_t intmax_t;
+
+
+
+
+typedef uint32_t uintmax_t;
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+
+# 26 "D:\!electronics\!projects\usb_ctrl_6\ptypes.h"
+typedef enum
+{
+STATUS_OK = 0,
+STATUS_ERROR
+} status_t;
+
+typedef uint8_t bool_t;
+
+# 14 "D:\!electronics\!projects\usb_ctrl_6\utils.h"
+int16_t util_strcmp( uint8_t* s1, uint8_t* s2, uint16_t len );
+void util_memcpy( uint8_t* dest, uint8_t* src, uint16_t len );
+int16_t util_atoi( uint8_t* str );
+void util_reverse( uint8_t* s, uint32_t s_len );
+uint32_t util_itoa( int32_t n, uint8_t* s, uint32_t s_max );
+
+# 14 "D:\!electronics\!projects\usb_ctrl_6\utils.c"
+int16_t util_strcmp( uint8_t* s1, uint8_t* s2, uint16_t len )
+{
+int16_t retval = (int16_t)0;
+
+if (( ((void*)0) != s1 ) && ( ((void*)0) != s2 ))
+{
+while( len )
+{
+len--;
+if (( *s1 != *s2 ) || ( 0 == *s1 ) || ( 0 == *s2 ))
+{
+retval = (int16_t)( *s1 - *s2 );
+break;
+}
+s1++;
+s2++;
+}
+}
+
+return retval;
+}
+
+void util_memcpy( uint8_t* dest, uint8_t* src, uint16_t len )
+{
+uint16_t i;
+
+if (( ((void*)0) != dest ) && ( ((void*)0) != src ))
+{
+for ( i = 0; i < len; i++ )
+{
+dest[i] = src[i];
+}
+}
+}
+
+int16_t util_atoi( uint8_t* str )
+{
+int16_t res = 0;
+uint8_t i;
+
+for ( i = 0; '\0' != str[i] && (( str[i] >= 48 ) && ( str[i] <= 57 )); i++ )
+{
+res = ( res * 10 + ( str[i] - '0' ));
+}
+
+return res;
+}
+
+void util_reverse( uint8_t* s, uint32_t s_len )
+{
+uint8_t c;
+uint32_t i;
+uint32_t j;
+
+j = ( s_len - 1 );
+
+for ( i = 0; i < j; i++ )
+{
+c = s[i];
+s[i] = s[j];
+s[j] = c;
+j--;
+}
+}
+
+uint32_t util_itoa( int32_t n, uint8_t* s, uint32_t s_max )
+{
+uint32_t i;
+bool_t is_minus;
+uint32_t nr;
+
+if ( n < 0)
+{
+is_minus = !((0));
+nr = (uint32_t)(-n);
+}
+else
+{
+is_minus = (0);
+nr = (uint32_t)n;
+}
+
+i = 0;
+do
+{
+s[i] = ((uint8_t)( nr % 10 )) + '0';
+i++;
+nr /= 10;
+}
+while (( nr > 0 ) && ( i < s_max ));
+
+if ( 0 == nr )
+{
+if ( (0) != is_minus )
+{
+s[i] = '-';
+i++;
+}
+
+s[i] = '\0';
+util_reverse( s, i );
+}
+
+return i;
+}
